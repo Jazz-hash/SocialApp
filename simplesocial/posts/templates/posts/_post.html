@@ -1,0 +1,17 @@
+<div class="col-md-6 float-left">
+    <div class="card bg-dark p-2 mt-2 ml-0">
+        <h3>{{ post.message_html|safe }}</h3>
+        <div class="media p-0">
+            <div class="media-body pl-4">
+                <h6>
+                    <span><a href="{% url 'posts:for_user' username=post.user.username %}" class="h5" >@{{ post.user.username }}</a></span><br />
+                    <time class="time"><a href="{% url 'posts:single' username=post.user.username pk=post.pk %}">{{ post.created_at }}</a></time>
+                </h6>
+            </div>
+            <div class="media-footer p-0 mt-1 pr-3">
+                {% if user.is_authenticated and post.user == user %}
+                <a class="btn btn-danger" href="{% url 'posts:delete' pk=post.pk %}"><i class="fa fa-trash" aria-hidden="true"></i></a> {% else %} {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

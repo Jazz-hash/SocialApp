@@ -1,0 +1,43 @@
+{% extends "posts/post_base.html" %} {% block pre_post_content %}
+
+<div class="col-md-4">
+    {% if request.user.is_authenticated %}
+    <div class="card text-left shadow-lg">
+        <div class="card-body">
+            <h4 class="card-title">Your Groups</h4>
+            <p class="card-text">
+                <ul class="list-unstyled">
+                    {% for member_group in get_user_groups %}
+                    <li class="li-with-bullet">
+                        <a class="btn btn-primary" href="{% url 'groups:single' slug=member_group.group.slug %}" role="button"></a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+    <div class="card text-left shadow-lg">
+        <div class="card-body">
+            <h4 class="card-title">All Groups</h4>
+            <p class="card-text">
+                <ul class="list-unstyled">
+                    {% for other_group in get_other_groups %}
+                    <li>
+                        <a href="{% url 'groups:single' slug=other_group.slug %}"></a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block post_content %}
+<div class="col-md-12">
+    {% for post in post_list %} {% include "posts/_post.html" %} {% empty %}
+    <h2 class="text-center">No post available !!</h2>
+    {% endfor %}
+</div>
+
+{% endblock %}
